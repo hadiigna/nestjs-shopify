@@ -1,5 +1,6 @@
 import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common';
 import { ApplicationConfig, ModuleRef } from '@nestjs/core';
+import Shopify from '@shopify/shopify-api';
 import type { IncomingMessage, ServerResponse } from 'http';
 import { getOptionsToken } from './auth.constants';
 import { ShopifyAuthException } from './auth.errors';
@@ -23,7 +24,9 @@ export class ShopifyAuthExceptionFilter
     const res = context.getResponse<ServerResponse>();
     res.statusCode = exception.getStatus();
 
-    const domain = `https://${req.headers.host}`;
+    // Get scheme from global Shopify context to enforce http or https. (Use http for development only!)
+    const hostScheme = Shopify.Context.HOST_SCHEME;
+    const domain = `${hostScheme}://${req.headers.host}`;
     const redirectPath = this.buildRedirectPath(exception.shop, options);
     const authUrl = new URL(redirectPath, domain).toString();
 

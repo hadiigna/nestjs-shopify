@@ -9,6 +9,7 @@ export interface ShopifyCoreOptions {
   scopes: string[] | AuthScopes;
   apiVersion: ApiVersion;
   hostName: string;
+  hostScheme?: string;
   isEmbeddedApp: boolean;
   sessionStorage?: SessionStorage;
 }

@@ -29,6 +29,7 @@ export class ShopifyCoreModule
       API_VERSION: options.apiVersion,
       SCOPES: options.scopes,
       HOST_NAME: options.hostName,
+      HOST_SCHEME: options.hostScheme,
       IS_EMBEDDED_APP: options.isEmbeddedApp,
       SESSION_STORAGE: options.sessionStorage,
     });

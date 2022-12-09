@@ -12,6 +12,7 @@ export interface ShopifyAuthModuleOptions {
   returnHeaders?: boolean;
   useGlobalPrefix?: boolean;
   afterAuthHandler?: ShopifyAuthAfterHandler;
+  reauthorizeUrlDomainOverride?: string;
 }
 
 export interface ShopifyAuthOptionsFactory {

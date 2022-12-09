@@ -24,15 +24,13 @@ export class ShopifyAuthExceptionFilter
     const res = context.getResponse<ServerResponse>();
     res.statusCode = exception.getStatus();
 
-    // Get scheme from global Shopify context to enforce http or https. (Use http for development only!)
-    const hostScheme = Shopify.Context.HOST_SCHEME;
-    const domain = `${hostScheme}://${req.headers.host}`;
+    const domain = options.reauthorizeUrlDomainOverride ?? `https://${req.headers.host}`;
     const redirectPath = this.buildRedirectPath(exception.shop, options);
     const authUrl = new URL(redirectPath, domain).toString();
 
     if (options.returnHeaders) {
       res
-        .setHeader('X-Shopify-Api-Request-Failure-Reauthorize', '1')
+        .setHeader('X-Shopify-API-Request-Failure-Reauthorize', '1')
         .setHeader('X-Shopify-API-Request-Failure-Reauthorize-Url', authUrl);
     }
 
